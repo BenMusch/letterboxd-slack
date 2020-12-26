@@ -19,6 +19,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: pip install pipenv
+    - run: npm install -g serverless@^2.16.1
     - run: npm ci
     - name: deploy
       run: serverless deploy --stage prod
