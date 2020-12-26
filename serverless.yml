@@ -2,7 +2,7 @@ org: benmusch
 app: letterboxd-slack
 service: letterboxd-slack-cron
 
-frameworkVersion: ">=1.2.0 <2.0.0"
+frameworkVersion: ">=2.0.0 <2.2.0"
 
 provider:
   name: aws
