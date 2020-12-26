@@ -9,6 +9,8 @@ BASE_URL = "https://letterboxd.com/"
 RECENT_REVIEWS_PATH = "/films/reviews/by/added"
 SPOILER_WARNING_TEXT = "This review may contain spoilers. I can handle the truth."
 
+response_cache = {}
+
 @dataclass
 class Review:
     film_name: str
@@ -32,10 +34,15 @@ def get_new_reviews_for_user(username: str, until_marker: str) -> Sequence[Revie
     return reviews
 
 def _fetch_reviews_li(username: str):
-    resp = requests.get(f"{BASE_URL}{username}{RECENT_REVIEWS_PATH}")
-    if not resp.ok:
-        print(f"Error fetching reviews for {username}")
-        return []
+    url = f"{BASE_URL}{username}{RECENT_REVIEWS_PATH}/"
+    if url not in response_cache:
+        resp = requests.get(url)
+        if not resp.ok:
+            print(f"Error fetching reviews for {username}")
+            return []
+        response_cache[url] = resp
+    else:
+        resp = response_cache[url]
 
     soup = BeautifulSoup(resp.content, "html.parser")
     return soup.select("ul.film-list li.film-detail")

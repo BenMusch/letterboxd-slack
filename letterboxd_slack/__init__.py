@@ -6,6 +6,7 @@ from google.cloud import firestore
 
 from letterboxd_slack import letterboxd, slack
 
+
 def _get_firestore():
     key_path = os.environ.get("FIREBASE_PRIVATE_KEY_PATH")
     key_blob = os.environ.get("FIREBASE_PRIVATE_KEY_BLOB")
