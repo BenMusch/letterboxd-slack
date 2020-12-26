@@ -20,7 +20,7 @@ class Review:
     user: str
     score: str
 
-def cache_reset():
+def reset_cache():
     global response_cache
     response_cache = {}
 
