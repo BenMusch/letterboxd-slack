@@ -10,6 +10,8 @@ requests = "*"
 beautifulsoup4 = "*"
 slack-sdk = "*"
 firebase-admin = "*"
+google-cloud-firestore = "*"
+grpcio = "*"
 
 [requires]
 python_version = "3.8"

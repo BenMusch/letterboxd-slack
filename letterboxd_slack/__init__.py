@@ -22,6 +22,7 @@ def main(*args, **kwargs):
     channel_documents = db.collection("channels").get()
     for channel_document in channel_documents:
         channel_name = channel_document.id
+        print(channel_name)
         channel_data = channel_document.to_dict().get("users_and_markers", {})
 
         new_users_and_markers = {}
