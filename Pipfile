@@ -9,8 +9,9 @@ verify_ssl = true
 requests = "*"
 beautifulsoup4 = "*"
 slack-sdk = "*"
-firebase-admin = "*"
 google-cloud-firestore = "*"
+google-auth = "*"
+google-api-core = "*"
 grpcio = "*"
 
 [requires]

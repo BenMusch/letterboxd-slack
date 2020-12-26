@@ -1,20 +1,24 @@
+import json
 import os
 
-import firebase_admin
-from firebase_admin import credentials, firestore
+from google.oauth2 import service_account
+from google.cloud import firestore
 
 from letterboxd_slack import letterboxd, slack
 
 def _get_firestore():
     key_path = os.environ.get("FIREBASE_PRIVATE_KEY_PATH")
     key_blob = os.environ.get("FIREBASE_PRIVATE_KEY_BLOB")
-    if not (key_path or key_blob):
+    creds = None
+    if key_path:
+        creds = service_account.Credentials.from_service_account_file(key_path)
+    elif key_blob:
+        creds = service_account.Credentials.from_service_accoun_info(json.loads(key_blob))
+    else:
         raise ValueError(
             "Need to set `FIREBASE_PRIVATE_KEY_PATH` or `FIREBASE_PRIVATE_KEY_BLOB`"
         )
-    creds = credentials.Certificate(key_path or key_blob)
-    firebase_admin.initialize_app(creds)
-    return firestore.client()
+    return firestore.Client(project="slack-letterboxd", credentials=creds)
 
 db = _get_firestore()
 
