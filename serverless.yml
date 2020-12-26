@@ -1,12 +1,13 @@
 org: benmusch
 app: letterboxd-slack
-service: aws-python-scheduled-cron
+service: letterboxd-slack-cron
 
 frameworkVersion: ">=1.2.0 <2.0.0"
 
 provider:
   name: aws
   runtime: python3.8
+  profile: serverless
 
 functions:
   cron:
