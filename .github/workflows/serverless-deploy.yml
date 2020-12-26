@@ -18,6 +18,7 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - run: pip install pipenv
     - run: npm ci
     - name: serverless deploy
       uses: serverless/github-action@master

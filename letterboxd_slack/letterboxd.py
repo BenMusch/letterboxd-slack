@@ -19,7 +19,7 @@ class Review:
     score: str
 
 
-def get_users_and_last_review_markers() -> Dict[str, str]:
+def get_users_and_last_review_markers() -> Dict[str, Optional[str]]:
     """
     Mapping of followed users to the identifier of their last scraped review
     """
