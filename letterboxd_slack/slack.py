@@ -10,6 +10,7 @@ def _get_slack_client():
 def notify_review(channel, review):
     print(f"Notifying {channel} about {review}")
     client = _get_slack_client()
+    if channel != "#ben-test": return
     try:
         response = client.chat_postMessage(
             channel=channel,
