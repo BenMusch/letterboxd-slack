@@ -26,6 +26,7 @@ def get_most_recent_marker(username: str) -> str:
     return _review_from_li(all_reviews[0], username).review_link
 
 def get_new_reviews_for_user(username: str, until_marker: str) -> Sequence[Review]:
+    print(f"Getting new reviews for {user}")
     reviews = []
     for li in _fetch_reviews_li(username):
         review = _review_from_li(li, username)
@@ -42,6 +43,7 @@ def _fetch_reviews_li(username: str):
             return []
         response_cache[url] = resp
     else:
+        print(f"Using cache for {username}")
         resp = response_cache[url]
 
     soup = BeautifulSoup(resp.content, "html.parser")
@@ -53,6 +55,7 @@ def _review_from_li(review_li, username) -> Review:
     score_node = review_li.select_one(".rating")
 
     review_link = f"{BASE_URL}{title_node['href'][1:]}"
+    print(f"Examining {review_link}")
     film_name = title_node.text.strip()
     review_text = review_body_node.text.strip()
     score = score_node.text.strip() if score_node else "(no score)"

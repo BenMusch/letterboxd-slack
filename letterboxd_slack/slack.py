@@ -8,6 +8,7 @@ def _get_slack_client():
     return WebClient(token=os.environ['SLACK_TOKEN'])
 
 def notify_review(channel, review):
+    print(f"Notifying {channel} about {review}")
     client = _get_slack_client()
     try:
         response = client.chat_postMessage(
