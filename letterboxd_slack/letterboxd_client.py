@@ -24,12 +24,13 @@ def get_users_and_last_review_markers() -> Dict[str, str]:
     Mapping of followed users to the identifier of their last scraped review
     """
     return {
-        "benmusch": "/film/green-book"
+        "benmusch": "https://letterboxd.com/benmusch/film/wolfwalkers/"
     }
 
 def get_new_reviews() -> Sequence[Review]:
     reviews = []
     for username, marker in get_users_and_last_review_markers().items():
+        # assumption: cron runs faster than user submits reviews, no need to paginate
         reviews += get_new_reviews_for_user(username, marker)
     return reviews
 
