@@ -15,6 +15,9 @@ functions:
     events:
       # Invoke Lambda function every minute
       - schedule: rate(1 minute)
+    environment:
+      FIREBASE_PRIVATE_KEY_BLOB: ${ssm:/lbxd-firebase-certificate}
+      SLACK_TOKEN: ${ssm:/lbxd-slack-token}
 
 plugins:
   - serverless-python-requirements
