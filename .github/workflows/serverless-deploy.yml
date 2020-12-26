@@ -20,8 +20,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: pip install pipenv
     - run: npm ci
-    - name: serverless deploy
-      uses: serverless/github-action@master
+    - run: serverless deploy --stage prod
       with:
         args: deploy --stage prod
       env:
