@@ -43,6 +43,7 @@ def get_new_reviews_for_user(username: str, until_marker: str) -> Sequence[Revie
         return reviews
     else:
         print("Never hit marker, cancelling to avoid spam")
+        return []
 
 def _fetch_reviews_li(username: str):
     url = f"{BASE_URL}{username}{RECENT_REVIEWS_PATH}/"
