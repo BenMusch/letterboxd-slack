@@ -20,13 +20,17 @@ class Review:
     user: str
     score: str
 
+def cache_reset():
+    global response_cache
+    response_cache = {}
+
 def get_most_recent_marker(username: str) -> str:
     all_reviews = _fetch_reviews_li(username)
     if not all_reviews: return None
     return _review_from_li(all_reviews[0], username).review_link
 
 def get_new_reviews_for_user(username: str, until_marker: str) -> Sequence[Review]:
-    print(f"Getting new reviews for {user}")
+    print(f"Getting new reviews for {username}")
     reviews = []
     for li in _fetch_reviews_li(username):
         review = _review_from_li(li, username)
