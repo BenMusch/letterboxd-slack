@@ -32,11 +32,17 @@ def get_most_recent_marker(username: str) -> str:
 def get_new_reviews_for_user(username: str, until_marker: str) -> Sequence[Review]:
     print(f"Getting new reviews for {username}")
     reviews = []
+    did_break = False
     for li in _fetch_reviews_li(username):
         review = _review_from_li(li, username)
-        if review.review_link == until_marker: break
+        if review.review_link == until_marker:
+            did_break = True
+            break
         reviews += [review]
-    return reviews
+    if did_break:
+        return reviews
+    else:
+        print("Never hit marker, cancelling to avoid spam")
 
 def _fetch_reviews_li(username: str):
     url = f"{BASE_URL}{username}{RECENT_REVIEWS_PATH}/"
