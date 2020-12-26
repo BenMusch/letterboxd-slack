@@ -17,6 +17,7 @@ functions:
       - schedule: rate(1 minute)
     environment:
       FIREBASE_PRIVATE_KEY_BLOB: ${ssm:/lbxd-firebase-certificate}
+      FIREBASE_PROJECT_ID: 'slack-letterboxd'
       SLACK_TOKEN: ${ssm:/lbxd-slack-token}
 
 plugins:

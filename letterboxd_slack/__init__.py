@@ -13,12 +13,12 @@ def _get_firestore():
     if key_path:
         creds = service_account.Credentials.from_service_account_file(key_path)
     elif key_blob:
-        creds = service_account.Credentials.from_service_accoun_info(json.loads(key_blob))
+        creds = service_account.Credentials.from_service_account_info(json.loads(key_blob))
     else:
         raise ValueError(
             "Need to set `FIREBASE_PRIVATE_KEY_PATH` or `FIREBASE_PRIVATE_KEY_BLOB`"
         )
-    return firestore.Client(project="slack-letterboxd", credentials=creds)
+    return firestore.Client(project=os.environ["FIREBASE_PROJECT_ID"], credentials=creds)
 
 db = _get_firestore()
 
