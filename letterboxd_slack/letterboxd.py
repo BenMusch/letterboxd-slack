@@ -9,8 +9,6 @@ BASE_URL = "https://letterboxd.com/"
 RECENT_REVIEWS_PATH = "/films/reviews/by/added"
 SPOILER_WARNING_TEXT = "This review may contain spoilers. I can handle the truth."
 
-response_cache = {}
-
 @dataclass
 class Review:
     film_name: str
@@ -19,10 +17,6 @@ class Review:
     has_spoilers: bool
     user: str
     score: str
-
-def reset_cache():
-    global response_cache
-    response_cache = {}
 
 def get_most_recent_marker(username: str) -> str:
     all_reviews = _fetch_reviews_li(username)
@@ -47,15 +41,10 @@ def get_new_reviews_for_user(username: str, until_marker: str) -> Sequence[Revie
 
 def _fetch_reviews_li(username: str):
     url = f"{BASE_URL}{username}{RECENT_REVIEWS_PATH}/"
-    if url not in response_cache:
-        resp = requests.get(url)
-        if not resp.ok:
-            print(f"Error fetching reviews for {username}")
-            return []
-        response_cache[url] = resp
-    else:
-        print(f"Using cache for {username}")
-        resp = response_cache[url]
+    resp = requests.get(url)
+    if not resp.ok:
+        print(f"Error fetching reviews for {username}")
+        return []
 
     soup = BeautifulSoup(resp.content, "html.parser")
     return soup.select("ul.film-list li.film-detail")

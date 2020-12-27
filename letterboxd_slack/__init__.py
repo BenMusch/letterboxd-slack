@@ -25,7 +25,6 @@ db = _get_firestore()
 
 def main(*args, **kwargs):
     channel_documents = db.collection("channels").get()
-    letterboxd.reset_cache()
     for channel_document in channel_documents:
         channel_name = channel_document.id
         print(channel_name)
