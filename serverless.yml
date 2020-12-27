@@ -12,6 +12,7 @@ provider:
 functions:
   cron:
     handler: letterboxd_slack.main
+    timeout: 10 # seconds
     events:
       # Invoke Lambda function every minute
       - schedule: rate(1 minute)
