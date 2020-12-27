@@ -1,5 +1,6 @@
 import json
 import os
+import time
 
 from google.oauth2 import service_account
 from google.cloud import firestore
@@ -29,6 +30,13 @@ def main(*args, **kwargs):
         channel_name = channel_document.id
         print(channel_name)
         channel_data = channel_document.to_dict().get("users_and_markers", {})
+        last_timestamp = channel_document.to_dict().get("last_run_timestamp", 0)
+
+        if int(time.time()) - last_timestamp < 60:
+            print("skipping because it's been under 60 seconds since last run")
+        else:
+            ts_data = dict(last_run_timestamp=int(time.time()))
+            db.collection("channels").document(channel_name).set(ts_data, merge=true)
 
         new_users_and_markers = {}
 
@@ -42,4 +50,4 @@ def main(*args, **kwargs):
             new_users_and_markers[username] = new_marker
             new_channel_doc = dict(users_and_markers=new_users_and_markers)
 
-        db.collection("channels").document(channel_name).set(new_channel_doc)
+        db.collection("channels").document(channel_name).set(new_channel_doc, merge=true)
